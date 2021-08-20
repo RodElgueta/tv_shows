@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<form class="col-4" action="editshow" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Title (at least 3 characters)</label>
+        <input type="text" class="form-control" id="Title" aria-describedby="emailHelp" name="title" value="{{show.title}}" placeholder="{{show.title}}">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Description (at least 10 characters)</label>
+        <textarea type="text" class="form-control" id="desc" name="desc"  placeholder="{{show.desc}}">{{show.desc}}</textarea>
+    </div>
+    <div class="col-5 mb-3">
+        <label for="exampleInputPassword1" class="form-label"></label>
+    <input type="date" class="form-control" id="date" value="{{datestring}}" name="release_date" placeholder="">
+    </div>
+
+        
+    
+    <div class="col-5 mb-3">
+        <select name="network"class="form-select" aria-label="Default select example">
+            
+            {%for network in networks%}
+                <option value="{{network.id}}">{{network.name}}</option>
+            {%endfor%}
+        </select>
+    </div>
+    <div class="input-field col-8">
+            <input type="submit" class="waves-effect waves-light btn">
+            <p class="text-center"></p><button type="submit" class="btn btn-primary">Submit</button></p>
+    </div>
+</form>
+<a href="/shows/{{show.id}}">View Details</a>
+
+{% endblock %}
