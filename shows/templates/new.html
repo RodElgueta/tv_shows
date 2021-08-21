@@ -16,20 +16,25 @@
         <label for="exampleInputPassword1" class="form-label">Release Date (no unreleased shows)</label>
         <input type="date" class="form-control" id="date" value="2021-01-08" name="release_date">
     </div>
-
-        
+    <label for="basic-url" class="form-label">Optional: Your image URL</label>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">https://img.com/44523-738.jpg</span>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="img">
+    </div>
+    
     
     <div class="col-5 mb-3">
         <select name="network"class="form-select" aria-label="Default select example">
             <option value="default" selected>Networks</option>
             {%for network in networks%}
-                <option value="{{network.id}}">{{network.name}}</option>
+            <option value="{{network.id}}">{{network.name}}</option>
             {%endfor%}
         </select>
     </div>
     <div class="input-field col-8">
-            <input type="submit" class="waves-effect waves-light btn">
-            <p class="text-center"></p><button type="submit" class="btn btn-primary">Submit</button></p>
+        
+        <p class="text-center"></p><button type="submit" class="btn btn-primary">Submit</button></p>
     </div>
 </form>
 

@@ -22,7 +22,7 @@ def createshow(request):
     desc = request.POST['desc']
     net = request.POST['network']
     release_date = request.POST['release_date']
-    
+    img = request.POST['img']
     shows = Shows.objects.all()
     errors = Shows.objects.basic_valid(request.POST,shows)
     
@@ -31,9 +31,9 @@ def createshow(request):
             messages.error(request, error_msg)
         return redirect('/shows/new')
     try:
-        new_show = Shows.objects.create (title = title, desc = desc , network = Networks.objects.get(id=int(net)), release_date = release_date)
+        new_show = Shows.objects.create (title = title, desc = desc , network = Networks.objects.get(id=int(net)), release_date = release_date, img=img)
     except IntegrityError:
-        messages.error(request,"This show alrready exist")
+        messages.error(request,"This show already exist")
         return redirect('/shows/new')
         
     messages.success(request, f'Show {title} has been Created')
@@ -63,6 +63,7 @@ def editshow(request,show_id):
     desc = request.POST['desc']
     net = request.POST['network']
     release_date = request.POST['release_date']
+    img = request.POST['img']
     
     shows = Shows.objects.all()
     errors = Shows.objects.basic_valid(request.POST,shows)
@@ -76,10 +77,11 @@ def editshow(request,show_id):
     show.desc = desc
     show.network = Networks.objects.get(id=int(net))
     show.release_date = release_date
+    show.img = img
     try:
         show.save()
     except IntegrityError:
-        messages.error(request,"This show alrready exist")
+        messages.error(request,"This show already exist")
         return redirect(f'/shows/{show_id}/edit')
 
     messages.info(request, f'Show {show.title} has been edited')

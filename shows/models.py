@@ -44,7 +44,7 @@ class Shows(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     network = models.ForeignKey(Networks,related_name="show",on_delete = models.CASCADE)
-    # img = models.URLField(default="")
+    img = models.URLField(default="https://img.freepik.com/free-vector/tv-show-neon-sign-style-text_44523-738.jpg?size=338&ext=jpg")
     objects = ShowsManager()
     
     def __repr__(self) -> str:

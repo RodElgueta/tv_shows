@@ -17,6 +17,15 @@
     <input type="date" class="form-control" id="date" value="{{datestring}}" name="release_date" placeholder="">
     </div>
 
+    <div class="col-3">
+        <p>Show Image</p>
+        <img class="border border-white mb-2"  src="{{show.img}}" alt="" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">New Image Url</span>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="img">
+    </div>
+
         
     
     <div class="col-5 mb-3">
@@ -28,7 +37,7 @@
         </select>
     </div>
     <div class="input-field col-8">
-            <input type="submit" class="waves-effect waves-light btn">
+            
             <p class="text-center"></p><button type="submit" class="btn btn-primary">Submit</button></p>
     </div>
 </form>
