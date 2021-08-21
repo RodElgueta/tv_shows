@@ -12,9 +12,10 @@ class ShowsManager(models.Manager):
         #for show in shows:
             #if show.title == postData['title']:
                 #errors["title"] = "Show alrready exist"
-
-        if len(postData['desc']) < 10 or len(postData['desc']) > 300:
-            errors['desc'] = "Show description should be at least 10 characters and not more than 300 character"
+        
+        if len(postData['desc']) > 0:
+            if len(postData['desc']) < 10 or len(postData['desc']) > 300:
+                errors['desc'] = "Show description should be at least 10 characters and not more than 300 character"
         
         if postData['network'] == 'default':
             errors['network'] = "Please select a Network for your Show"
@@ -43,7 +44,7 @@ class Shows(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     network = models.ForeignKey(Networks,related_name="show",on_delete = models.CASCADE)
-    #img = models.URLField(default="")
+    # img = models.URLField(default="")
     objects = ShowsManager()
     
     def __repr__(self) -> str:

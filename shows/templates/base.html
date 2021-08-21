@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>TvShows</title>
 </head>
-<body>
+<body style="background-image: url('https://namagic.com/wp-content/uploads/2020/04/tv-show-neon-signs-style-text_118419-1341.jpg');background-repeat: no-repeat;
+background-size: cover;">
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -31,7 +32,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">TvShows</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,23 +41,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/shows">Shows</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+                    
                 </ul>
                 <form class="d-flex">  
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -65,8 +50,8 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid bg-dark min-vh-100">
-        <div class="row text-light">
+    <div class="container-fluid  min-vh-100" >
+        <div class="row text-light mt-3">
             {% block content %}
             
             
@@ -91,6 +76,10 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
+            "timeOut" : 4000,
+            "extenderTimeOut": 1000,
+            "positionClass": "toast-top-center",
+            
         }
         {%if messages%}
             {%for message in messages%}
@@ -98,5 +87,6 @@
             {%endfor%}
         {%endif%}
     </script>
+
 </body>
 </html>
