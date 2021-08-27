@@ -94,5 +94,64 @@ def delete(request,show_id):
     messages.warning(request, f'Show {showdel.title} has been deleted')
     return redirect('/shows')
 
+def signup(request):
+    if request.method == 'GET':
+        return render(request,'signup.html')
+
+    else:
+
+        name = request.POST['name']
+        email = request.POST['email']
+        password = request.POST['password']
+        pass_conf = request.POST['pass_conf']
+
+        if password != pass_conf:
+            messages.error(request, 'Passwords dont coincide')
+            return redirect('/signup')
+        
+        errors = Users.objects.user_valid(request.POST)
+
+        if len(errors) > 0:
+            for key, error_msg in errors.items():
+                messages.error(request, error_msg)
+            return redirect('/signup')
+        try:
+            new_user = Users.objects.create(
+            name=name,
+            email=email,
+            password=password)
+        except IntegrityError:
+            messages.error(request,"This Username/Email is already in use")
+            return redirect('/signup')
+
+        request.session['user'] = {'name':name}
+        # xq estaban 'email':email,'password':password en session?
+                                
+
+        messages.success(request,f'Welcome {name} to TvShows')
+        return redirect('/shows')
+
+def login(request):
+    if request.method == 'GET':
+        return render(request,"login.html")
+    
+    else:
+        username = request.POST['name']
+        password = request.POST['password']
+
+        user = Users.objects.filter(name = username)
+        if user:
+            logged_user = user[0]
+            if logged_user.password == password:
+                request.session['user'] = {'name':username}
+                
+                messages.success(request,f'Welcome {username} to TvShows')
+                return redirect('/shows')
+            else:
+                messages.error(request,"Invalid Username/Password")
+                return redirect('/login')
 
 
+def logout(request):
+    del request.session['user']
+    return redirect('/login')

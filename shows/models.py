@@ -28,6 +28,15 @@ class ShowsManager(models.Manager):
         
         return errors
 
+class UsersManager(models.Manager):
+    def user_valid(self,userData):
+        errors = {}
+
+        if len(userData['name']) < 3 or len(userData['name'])  > 45:
+                errors["name"] = "Username must be at least 3 character and not more than 45 characters" 
+
+        return errors
+
 class Networks(models.Model):
     name = models.CharField(max_length=50)
     
@@ -49,4 +58,16 @@ class Shows(models.Model):
     
     def __repr__(self) -> str:
         return f'{self.id} {self.title}'
+
+class Users(models.Model):
+    name = models.CharField(max_length=45,unique=True)
+    email = models.EmailField(max_length=155,unique=True)
+    password = models.CharField(max_length=255)
+    allowed = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = UsersManager()
+
+    def __repr__(self) -> str:
+        return f'{self.id} {self.name}'
 
