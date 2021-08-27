@@ -47,8 +47,13 @@ background-size: cover;">
                         <a class="nav-link active" aria-current="page" href="/shows">Shows</a>
                     </li>
                 </ul>
-                <p class="navbar-brand navbar-text me-2 mb-2 mb-lg-0 text-light" aria-current="page">Bienvenido {{request.session.user.name}}</p>
-                <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+                {%if request.session.user is not None%}
+                <p class="navbar-brand navbar-text me-2 mb-2 mb-lg-0 text-light" aria-current="page">Welcome {{request.session.user.name}}</p>
+                <a class="nav-link active" aria-current="page" href="/logout">Log-out</a>
+                {%else%}
+                <p class="navbar-brand navbar-text me-2 mb-2 mb-lg-0 text-light" aria-current="page">Please</p>
+                <a class="nav-link active" aria-current="page" href="/login">Log-in</a>
+                {%endif%}
                 <form class="d-flex">  
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>

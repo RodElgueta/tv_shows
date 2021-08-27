@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 from django.db import IntegrityError
 import bcrypt
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     context = {
@@ -11,14 +12,20 @@ def index(request):
     return redirect("/login")
 
 def shows(request):
-    context = {'shows' : Shows.objects.all()}
-    return render(request, 'shows.html',context)
+    if 'user' not in request.session:
+        return redirect('/login')
+        
+    else:
+        context = {'shows' : Shows.objects.all()}
+        return render(request, 'shows.html',context)
+        
 
 def new(request):
     context = {'networks' : Networks.objects.all()}
     return render (request, 'new.html',context)
 
 def createshow(request):
+
     title = request.POST['title']
     desc = request.POST['desc']
     net = request.POST['network']
@@ -40,6 +47,7 @@ def createshow(request):
     messages.success(request, f'Show {title} has been Created')
     return redirect(f"/shows/{new_show.id}")
 
+#@login_required
 def view(request,int):
     show = Shows.objects.get(id=int)
     
