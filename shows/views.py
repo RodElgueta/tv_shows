@@ -2,12 +2,13 @@ from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib import messages
 from django.db import IntegrityError
+import bcrypt
 
 def index(request):
     context = {
         'saludo': 'Hola'
     }
-    return redirect("/shows")
+    return redirect("/login")
 
 def shows(request):
     context = {'shows' : Shows.objects.all()}
@@ -104,12 +105,14 @@ def signup(request):
         email = request.POST['email']
         password = request.POST['password']
         pass_conf = request.POST['pass_conf']
+        
 
         if password != pass_conf:
             messages.error(request, 'Passwords dont coincide')
             return redirect('/signup')
         
         errors = Users.objects.user_valid(request.POST)
+        pw_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
         if len(errors) > 0:
             for key, error_msg in errors.items():
@@ -119,7 +122,7 @@ def signup(request):
             new_user = Users.objects.create(
             name=name,
             email=email,
-            password=password)
+            password=pw_hash)
         except IntegrityError:
             messages.error(request,"This Username/Email is already in use")
             return redirect('/signup')
@@ -142,7 +145,7 @@ def login(request):
         user = Users.objects.filter(name = username)
         if user:
             logged_user = user[0]
-            if logged_user.password == password:
+            if bcrypt.checkpw(password.encode(), logged_user.password.encode()):
                 request.session['user'] = {'name':username}
                 
                 messages.success(request,f'Welcome {username} to TvShows')
